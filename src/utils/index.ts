@@ -63,14 +63,15 @@ export function getEpisodeCover(aEpisode: episode) {
 }
 
 export function fixedCoverUrl(originUrl: string | undefined, originImage = false, size = 1000) {
+  console.log(originImage)
   if (!originUrl) return ''
-  if (originUrl.length === 69)
-    return `https${originUrl.toString().slice(4, 59)}.jpg`
-
   if (originUrl.length === 70)
-    return `https${originUrl.toString().slice(4, 60)}.jpg`
+    return `https${originUrl.toString().slice(5, 60)}.jpg`
+
+  if (originUrl.length === 71)
+    return `https${originUrl.toString().slice(5, 61)}.jpg`
 
   return originImage
-    ? `https${originUrl.toString().slice(4, 62)}.jpg`
-    : `https${originUrl.toString().slice(4, 62)}_${size}x${size}.jpg`
+    ? `https${originUrl.toString().slice(5, 63)}.jpg`
+    : `https${originUrl.toString().slice(5, 63)}_${size}x${size}.jpg`
 }

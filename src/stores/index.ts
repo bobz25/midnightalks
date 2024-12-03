@@ -15,6 +15,7 @@ export const usePodcastStore = defineStore('podcastId', {
     async getPodcastData() {
       try {
         const podcastData = await PodcastData() as rssObj
+        console.log(podcastData)
         this.$patch({ podcastData },
         )
       }

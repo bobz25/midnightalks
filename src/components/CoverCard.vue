@@ -14,7 +14,7 @@ const { title, created, itunes_image, goTo } = defineProps<{
 <template>
   <div
     flex justify-center items-center text-2xl rounded-lg
-    absolute w-full h-full
+    absolute w-full h-full shadow-lg
   >
     <img
       v-lazy="fixedCoverUrl(itunes_image?.href)"

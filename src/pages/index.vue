@@ -86,41 +86,83 @@ const search = () => {
 
 <template>
   <div flex="~ col" justify-center items-center @scroll="handleScroll">
-    <div>
-      <input
-        v-model="searchText" placeholder="输入关键词进行搜索" op-50
-        w-100 h-10 p-2 m-2 text-2xl rounded @keyup.enter="search"
-      >
-      <label for="withDescription">包含描述</label>
-      <input v-model="withDescription" name="withDescription" type="checkbox" @change="search">
-    </div>
-    <div v-if="searchEpisodeData" text="#eee">
-      共得到 {{ searchResultCount }} 个搜索结果
-    </div>
-    <div v-if="searchEpisodeData" grid grid-cols-2 bg="#eee" bg-op-20 rd-2 gap-2 p-2>
-      <div
-        v-for="{ created, itunes_image, title } in searchEpisodeData"
-        :id="created.toString()" :key="created.toString()" w-150 h-150 relative
-      >
-        <CoverCard :created="created" :itunes_image="itunes_image" :title="title" :go-to="goTo.episodeDetail" />
-      </div>
-    </div>
-    <div grid grid-cols-2 p-2 gap-2>
-      <div
-        v-for="{ created, itunes_image, title } in episodeData"
-        :id="created.toString()" :key="created.toString()" w-150 h-150 relative
-      >
-        <CoverCard :created="created" :itunes_image="itunes_image" :title="title" :go-to="goTo.episodeDetail" />
-      </div>
-      <div
-        z-2 cursor-pointer class="rd-50%" bg-black hover:bg-op-30 fixed text-6 lg:text-10 bottom-5 right-5 w-12 lg:w-20
-        h-12 lg:h-20 text-center :style="{ display: showReturnTop }" @click="scrollToTop"
-      >
-        <div flex="~" justify-center items-center w-full h-full color-white>
-          Top
+    <!-- 搜索区域 -->
+    <div class="w-full max-w-5xl px-4 my-4">
+      <div class="flex flex-col sm:flex-row items-center gap-4">
+        <input
+          v-model="searchText"
+          placeholder="输入关键词进行搜索"
+          class="w-full sm:flex-1 h-12 px-4 text-lg sm:text-xl rounded-lg
+                 border border-gray-200 focus:outline-none focus:border-gray-400
+                 transition-colors duration-200"
+          @keyup.enter="search"
+        >
+        <div class="flex items-center gap-2">
+          <input
+            v-model="withDescription"
+            name="withDescription"
+            type="checkbox"
+            class="w-4 h-4"
+            @change="search"
+          >
+          <label for="withDescription" class="text-sm sm:text-base">包含描述</label>
         </div>
       </div>
     </div>
+
+    <!-- 搜索结果计数 -->
+    <div v-if="searchEpisodeData" class="w-full max-w-5xl px-4 mb-4 text-[#eee]">
+      共得到 {{ searchResultCount }} 个搜索结果
+    </div>
+
+    <!-- 搜索结果网格 -->
+    <div
+      v-if="searchEpisodeData"
+      class="w-full max-w-5xl px-4 grid grid-cols-1 sm:grid-cols-2
+             gap-6 bg-[#eee] bg-opacity-20 rounded-lg p-4"
+    >
+      <div
+        v-for="{ created, itunes_image, title } in searchEpisodeData"
+        :id="created.toString()"
+        :key="created.toString()"
+        class="aspect-square w-full relative min-w-[280px]"
+      >
+        <CoverCard
+          :created="created"
+          :itunes_image="itunes_image"
+          :title="title"
+          :go-to="goTo.episodeDetail"
+        />
+      </div>
+    </div>
+
+    <!-- 主要内容网格 -->
+    <div class="w-full max-w-5xl px-4 grid grid-cols-1 sm:grid-cols-2 gap-6 py-4">
+      <div
+        v-for="{ created, itunes_image, title } in episodeData"
+        :id="created.toString()"
+        :key="created.toString()"
+        class="aspect-square w-full relative min-w-[280px]"
+      >
+        <CoverCard
+          :created="created"
+          :itunes_image="itunes_image"
+          :title="title"
+          :go-to="goTo.episodeDetail"
+        />
+      </div>
+    </div>
+
+    <!-- 返回顶部按钮 -->
+    <button
+      class="fixed z-50 bottom-5 right-5 bg-black hover:bg-opacity-70
+             transition-all duration-200 rounded-full
+             w-12 h-12 sm:w-14 sm:h-14 flex items-center justify-center
+             text-white text-sm sm:text-base"
+      :style="{ display: showReturnTop }"
+      @click="scrollToTop"
+    >
+      Top
+    </button>
   </div>
 </template>
-
