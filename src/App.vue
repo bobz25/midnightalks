@@ -10,7 +10,6 @@ const headDefault = {
   ],
 }
 
-// <script async defer data-website-id="18ce7a3b-77df-42cf-aa9f-f7114d0cc053" src="https://u.imzbb.cc/u.js"/>
 useHead(
   process.env.NODE_ENV === 'production'
     ? { ...headDefault }
